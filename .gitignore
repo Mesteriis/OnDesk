@@ -1,0 +1,17 @@
+.DS_Store
+.work/
+build/
+.build/
+.gradle/
+.kotlin/
+local.properties
+*.iml
+.idea/
+
+.serena/
+
+# Private signing material
+*.jks
+*.keystore
+.env
+.env.*

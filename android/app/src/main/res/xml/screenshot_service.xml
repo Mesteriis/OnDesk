@@ -1,0 +1,7 @@
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:canTakeScreenshot="true"
+    android:canRetrieveWindowContent="false"
+    android:isAccessibilityTool="false"
+    android:description="@string/screenshot_service_description"
+    android:settingsActivity="app.ondesk.QuickActionsSetupActivity" />

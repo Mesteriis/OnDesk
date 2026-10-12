@@ -1,0 +1,8 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut android:shortcutId="screenshot_to_mac" android:enabled="true" android:icon="@drawable/ic_shortcut_screenshot" android:shortcutShortLabel="@string/shortcut_screenshot" android:shortcutLongLabel="@string/shortcut_screenshot">
+        <intent android:action="android.intent.action.VIEW" android:targetPackage="app.ondesk" android:targetClass="app.ondesk.ScreenshotShortcutActivity" />
+    </shortcut>
+    <shortcut android:shortcutId="camera_to_mac" android:enabled="true" android:icon="@drawable/ic_shortcut_camera" android:shortcutShortLabel="@string/shortcut_camera" android:shortcutLongLabel="@string/shortcut_camera">
+        <intent android:action="android.intent.action.VIEW" android:targetPackage="app.ondesk" android:targetClass="app.ondesk.CameraShortcutActivity" />
+    </shortcut>
+</shortcuts>
