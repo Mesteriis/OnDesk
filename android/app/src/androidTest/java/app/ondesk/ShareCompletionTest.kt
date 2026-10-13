@@ -74,6 +74,13 @@ class ShareCompletionTest {
         } finally { clean(before); app.transfers.unlock() }
     }
     @Test fun importErrorClosesInvisibleActivityAndLeavesActionableNotification() = runBlocking {
+        // A fresh CI installation has no notification permission; establish this
+        // test's prerequisite explicitly rather than relying on a previous setup.
+        InstrumentationRegistry.getInstrumentation()
+            .getUiAutomation(android.app.UiAutomation.FLAG_DONT_SUPPRESS_ACCESSIBILITY_SERVICES)
+            .grantRuntimePermission(app.packageName, android.Manifest.permission.POST_NOTIFICATIONS)
+        assertEquals(android.content.pm.PackageManager.PERMISSION_GRANTED,
+            app.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS))
         app.transfers.lock()
         val before = app.database.queue().all().map { it.id }.toSet()
         try {

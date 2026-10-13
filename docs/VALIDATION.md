@@ -267,3 +267,20 @@ Conscrypt отклонял его с INVALID_INTEGER. Регрессия на ф
 - Running Mac and paired physical phone left unchanged. Earlier physical feature
   results above use development builds. Gatekeeper acceptance and installation of
   the new signed release APK on a clean physical phone are not verified.
+
+## GitHub Actions setup — 2026-10-13
+
+- Dedicated GitHub Mac runner registered for OnDesk, separate from the existing
+  Gitea service. Initial shell launch failed because the runner installation path
+  contained spaces; moved the new runner to a path without spaces. Swift tests and
+  optimized Mac bundle then passed in Actions.
+- Hosted Android setup first rejected the obsolete `tools` package, then the old
+  `platforms;android-37` identifier. Pin command-line tools 22 (download 15859902),
+  install `platforms;android-37.0`, and use the 37.0 system image name. Hosted JVM,
+  lint and debug/test APK builds passed after these environment corrections.
+- First fresh API 36 instrumentation run: 9/10 tests passed; notification test
+  timed out because POST_NOTIFICATIONS had not been granted on a clean install.
+  The test now explicitly grants/asserts its notification prerequisite. This changes
+  instrumentation setup only, not production permission or share behavior.
+- actionlint and shellcheck passed. Version guard accepted matching metadata and
+  rejected Android version/build-number mismatches and invalid version syntax.
