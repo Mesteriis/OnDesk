@@ -262,6 +262,13 @@ OnDesk в Системные настройки → Уведомления. Пр
 недоступен. Ссылки по-прежнему сразу передаются браузеру; уведомления добавлены
 для полученных файлов, включая снимки для буфера обмена.
 
+## Автоматические проверки и релизы
+
+[GitHub Actions](https://github.com/Mesteriis/OnDesk/actions): Swift-тесты и Mac-сборка
+на собственном runner, Android JVM/lint и Share Target на эмуляторах API 36/37.
+Тег `vMAJOR.MINOR.PATCH` запускает проверку, сборку и публикацию релиза.
+Подробности и ограничения — в [инструкции выпуска](docs/RELEASING.md#github-actions).
+
 ## Публичные сборки и лицензия
 
 [Скачать релиз](https://github.com/Mesteriis/OnDesk/releases/latest) ·

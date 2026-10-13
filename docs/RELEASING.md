@@ -68,3 +68,33 @@ with JDK keytool; store them outside the checkout with restricted permissions.
 Published release builds have not been installed on the physical test phone: it
 retains the previously verified debug build and its pairing. See VALIDATION.md for
 feature checks performed on physical devices and emulators before publication.
+
+## GitHub Actions
+
+- **Checks** runs on pushes to main, pull requests and manual dispatch. Android JVM
+  tests, release lint and debug/test APK builds use GitHub-hosted Ubuntu. A reusable
+  instrumentation workflow runs ShareCompletionTest, LinkShareTest and RemoteCloseTest
+  on fresh API 36/37 emulators (10 tests each). It does not run screenshot accessibility
+  or cross-platform TLS fixtures; those need their separate setup in VALIDATION.md.
+- Swift tests and an optimized Mac bundle run on the `ondesk-macos` self-hosted runner
+  only for main pushes/manual main runs. Pull requests never run on the personal Mac.
+  Current GitHub-hosted macOS images lack the project's macOS 27 SDK.
+- **Release** runs for `v*` tags. The tagged commit must already be contained in main;
+  the tag must exactly match every platform's version. Both packaging jobs and the
+  emulator tests must succeed before publishing. Each third-party Action uses a
+  pinned commit. Build jobs have read-only repository permission; only the final
+  hosted publisher has contents:write and no signing secrets.
+- Manual **Release** from main builds/tests/uploads artifacts without publishing.
+  Download the workflow artifacts from the run page to inspect a release candidate.
+- Android signing uses repository secrets `ANDROID_RELEASE_KEYSTORE_BASE64` and
+  `ANDROID_RELEASE_KEYSTORE_PASSWORD`, alias `ondesk`, with the same key as 0.4.2.
+  The keystore is restored only for signing in a hosted runner's temporary directory
+  and removed on exit. Keep a private backup; GitHub Secrets cannot be read back.
+- The Mac runner is a separate user LaunchAgent named `ondesk-macos-arm64`; it does
+  not replace other CI services. It needs the Mac awake and the user session logged
+  in. No release workflow accesses the personal pairing Keychain or installs apps.
+
+To release, update all three platform versions/build numbers and CHANGELOG, push main,
+wait for Checks, then push the corresponding `vMAJOR.MINOR.PATCH` tag. Inspect the
+Release run and download/check its published SHA256SUMS.txt. Existing releases are
+not overwritten; a failed publication can leave a draft for maintainer inspection.

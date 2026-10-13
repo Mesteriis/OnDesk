@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.3 — 2026-10-13
+
+- GitHub Actions checks for Swift, Android JVM tests, lint and share-target
+  instrumentation on Android API 36 and 37.
+- macOS builds on a dedicated self-hosted Apple Silicon runner; Android builds
+  and signing run on GitHub-hosted Linux.
+- Release tags require matching platform versions and a commit contained in main.
+  Successful platform checks produce signed APKs, a Mac archive and SHA-256
+  checksums before publication. Manual release runs verify without publishing.
+
 ## 0.4.2 — 2026-10-12
 
 First public OSS release, under the MIT license.

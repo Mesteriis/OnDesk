@@ -1,0 +1,58 @@
+name: Checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  instrumentation:
+    uses: ./.github/workflows/android-instrumentation.yml
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407 # v3
+      - name: Install Android SDK
+        run: sdkmanager 'platforms;android-37' 'build-tools;36.0.0'
+      - name: Check versions and run JVM tests, lint and builds
+        run: |
+          python3 scripts/version.py
+          cd android
+          ./gradlew --no-daemon :app:testDebugUnitTest :app:lintRelease :app:assembleDebug :app:assembleDebugAndroidTest :quick-launcher:assembleDebug
+      - name: Upload test and lint reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: android-reports
+          path: |
+            android/app/build/reports/tests/
+            android/app/build/reports/lint-results-release.*
+          if-no-files-found: warn
+  macos:
+    # Never execute pull-request code on the personal Mac.
+    if: github.repository == 'Mesteriis/OnDesk' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, macOS, ARM64, ondesk-macos]
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check versions, Swift tests and optimized bundle
+        run: |
+          python3 scripts/version.py
+          swift --version
+          swift test --package-path macos
+          ./scripts/build-macos.sh release build/ci/OnDesk.app
+          codesign --verify --strict build/ci/OnDesk.app
