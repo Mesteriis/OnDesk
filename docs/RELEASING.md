@@ -86,6 +86,9 @@ feature checks performed on physical devices and emulators before publication.
   hosted publisher has contents:write and no signing secrets.
 - Manual **Release** from main builds/tests/uploads artifacts without publishing.
   Download the workflow artifacts from the run page to inspect a release candidate.
+- All external contributors require maintainer approval before fork PR workflows
+  run. Review workflow changes before approving; a PR can modify its workflow YAML,
+  so job-level conditions alone are not a sandbox for a public self-hosted runner.
 - Android signing uses repository secrets `ANDROID_RELEASE_KEYSTORE_BASE64` and
   `ANDROID_RELEASE_KEYSTORE_PASSWORD`, alias `ondesk`, with the same key as 0.4.2.
   The keystore is restored only for signing in a hosted runner's temporary directory
