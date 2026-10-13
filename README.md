@@ -265,7 +265,8 @@ OnDesk в Системные настройки → Уведомления. Пр
 ## Автоматические проверки и релизы
 
 [GitHub Actions](https://github.com/Mesteriis/OnDesk/actions): Swift-тесты и Mac-сборка
-на собственном runner, Android JVM/lint и Share Target на эмуляторах API 36/37.
+на собственном runner, Android JVM/lint на Linux и Share Target на эмуляторах
+API 36 (Linux) и 37 (ARM Mac, только доверенные main/релизные запуски).
 Тег `vMAJOR.MINOR.PATCH` запускает проверку, сборку и публикацию релиза.
 Подробности и ограничения — в [инструкции выпуска](docs/RELEASING.md#github-actions).
 

@@ -75,11 +75,14 @@ feature checks performed on physical devices and emulators before publication.
 - **Checks** runs on pushes to main, pull requests and manual dispatch. Android JVM
   tests, release lint and debug/test APK builds use GitHub-hosted Ubuntu. A reusable
   instrumentation workflow runs ShareCompletionTest, LinkShareTest and RemoteCloseTest
-  on fresh API 36/37 Google APIs emulators (10 tests each). It does not run screenshot accessibility
+  on fresh emulators (10 tests each): API 36 x86_64 on hosted Linux, API 37 ARM
+  on the dedicated Mac for trusted main/tag runs only. The Android 17 Linux images
+  did not boot reliably here; they are not silently treated as passing. It does not run screenshot accessibility
   or cross-platform TLS fixtures; those need their separate setup in VALIDATION.md.
 - Swift tests and an optimized Mac bundle run on the `ondesk-macos` self-hosted runner
   only for main pushes/manual main runs. Pull requests never run on the personal Mac.
   Current GitHub-hosted macOS images lack the project's macOS 27 SDK.
+  External PRs run Android API 36 checks; API 37 and Swift are checked after merge.
 - **Release** runs for `v*` tags. The tagged commit must already be contained in main;
   the tag must exactly match every platform's version. Both packaging jobs and the
   emulator tests must succeed before publishing. Each third-party Action uses a
@@ -107,3 +110,13 @@ To release, update all three platform versions/build numbers and CHANGELOG, push
 wait for Checks, then push the corresponding `vMAJOR.MINOR.PATCH` tag. Inspect the
 Release run and download/check its published SHA256SUMS.txt. Existing releases are
 not overwritten; a failed publication can leave a draft for maintainer inspection.
+
+The Mac runner also needs JDK 17, the Android SDK/emulator and
+`system-images;android-37.0;google_apis_ps16k;arm64-v8a` already installed.
+Configure `JAVA_HOME` and `ANDROID_HOME` privately on the runner, not in Git.
+`scripts/ci/test-android-37-macos.sh` builds test APKs, creates a fresh AVD under
+RUNNER_TEMP, uses an exclusive emulator port and explicit `adb -s emulator-5586`
+for every device operation, requires `OK (10 tests)`, then stops its emulator and
+removes its AVD. It never installs or instruments a connected physical phone.
+The runner pre-job hook must allow the three repository workflows listed in its
+script; update its installed private copy when that allowlist changes.

@@ -294,3 +294,14 @@ Conscrypt отклонял его с INVALID_INTEGER. Регрессия на ф
   the official pre-job hook. All external fork PR runs require owner approval.
 - Platform-specific local packaging PASS; APK signer certificate matches 0.4.2 for
   all three APKs, strict Mac signature verification PASS, no local home paths in ZIP.
+
+- Standard API 37 x86_64 Google APIs image also failed to boot on hosted Ubuntu
+  within 300 seconds; no instrumentation ran. After these two environment failures,
+  moved trusted API 37 checks to a disposable ARM AVD on the Mac runner. API 36
+  stays on hosted Linux; external PRs skip both personal-Mac jobs. All ADB device
+  operations explicitly select the owned emulator, never a physical device.
+- The installed pre-job hook accepted the actual Checks run before checkout,
+  followed by all 28 Swift tests and optimized bundle verification passing.
+- Disposable ARM emulator script executed locally with explicit emulator targeting:
+  Android 17 booted, all 10 instrumentation tests PASS (`OK (10 tests)`). APKs were
+  installed only into that disposable AVD, which was terminated and removed afterward.

@@ -13,6 +13,7 @@ esac
 case "${GITHUB_WORKFLOW_REF:-}" in
     "Mesteriis/OnDesk/.github/workflows/checks.yml@refs/heads/main") ;;
     "Mesteriis/OnDesk/.github/workflows/release.yml@$GITHUB_REF") ;;
+    "Mesteriis/OnDesk/.github/workflows/android-instrumentation.yml@refs/heads/main") ;;
     *) reject ;;
 esac
 echo 'Trusted OnDesk workflow accepted.'
