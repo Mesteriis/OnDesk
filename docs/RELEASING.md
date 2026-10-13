@@ -4,11 +4,11 @@
 
 Get the assets from https://github.com/Mesteriis/OnDesk/releases/latest:
 
-- `OnDesk-0.4.2-macos-arm64.zip`: macOS 27, Apple Silicon; unpack and copy
+- `OnDesk-0.4.3-macos-arm64.zip`: macOS 27, Apple Silicon; unpack and copy
   OnDesk.app to Applications, then open it. Intel binaries are not supplied.
-- `OnDesk-0.4.2-android.apk`: Android 16–17; allow installation from the source
+- `OnDesk-0.4.3-android.apk`: Android 16–17; allow installation from the source
   you used to download it, install, open OnDesk and pair using the Mac QR code.
-- `OnDesk-0.4.2-screenshot-launcher.apk` and `OnDesk-0.4.2-camera-launcher.apk`:
+- `OnDesk-0.4.3-screenshot-launcher.apk` and `OnDesk-0.4.3-camera-launcher.apk`:
   optional app entries for gesture utilities that cannot select shortcuts.
 - `SHA256SUMS.txt` and license/notice files.
 
@@ -45,7 +45,7 @@ export ONDESK_KEY_ALIAS=ondesk
 
 The script runs Swift tests, Android JVM tests and release lint, creates an optimized
 Mac app in `build/release/OnDesk.app`, signs APKs using apksigner and verifies signatures.
-It writes assets and checksums to `build/releases/v0.4.2/`. It does not install apps,
+It writes assets and checksums to `build/releases/v0.4.3/`. It does not install apps,
 change running applications, publish or notarize. The host architecture determines
 the Mac binary architecture. A different signing key produces a different APK;
 bit-for-bit reproducibility across machines has not been established.

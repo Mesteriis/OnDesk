@@ -152,8 +152,8 @@ Android может потребовать разрешить ограничен�
 
 У проверенной на Z Fold7 версии `com.notch.touch` нет выбора шорткатов/activity.
 Установите два необязательных APK, которые также создаёт `scripts/build-android.sh`:
-`build/OnDesk-screenshot-launcher-0.4.2-debug.apk` и
-`build/OnDesk-camera-launcher-0.4.2-debug.apk`. В настройке жеста выберите
+`build/OnDesk-screenshot-launcher-0.4.3-debug.apk` и
+`build/OnDesk-camera-launcher-0.4.3-debug.apk`. В настройке жеста выберите
 **Откройте выбранное приложение** → **OnDesk — Скриншот** или **OnDesk — Камера**.
 Например, назначьте двойное нажатие для скриншота и свайп для камеры.
 
