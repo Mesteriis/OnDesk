@@ -16,7 +16,7 @@ jobs:
           - api: '36'
             target: google_apis
           - api: '37.0'
-            target: google_apis_ps16k
+            target: google_apis
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -43,8 +43,10 @@ jobs:
           api-level: ${{ matrix.api }}
           arch: x86_64
           target: ${{ matrix.target }}
+          emulator-boot-timeout: 300
+          pre-emulator-launch-script: adb start-server
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot -no-metrics
           script: cd android && ./gradlew --no-daemon :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=app.ondesk.ShareCompletionTest,app.ondesk.LinkShareTest,app.ondesk.RemoteCloseTest
       - name: Upload instrumentation reports
         if: always()

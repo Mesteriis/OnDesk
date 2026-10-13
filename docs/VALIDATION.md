@@ -284,3 +284,13 @@ Conscrypt отклонял его с INVALID_INTEGER. Регрессия на ф
   instrumentation setup only, not production permission or share behavior.
 - actionlint and shellcheck passed. Version guard accepted matching metadata and
   rejected Android version/build-number mismatches and invalid version syntax.
+
+- Follow-up hosted run: API 36 instrumentation 10/10 PASS, JVM/lint and Mac PASS.
+  API 37 16 KB x86_64 system image stayed offline and hit the 600-second boot
+  timeout before any tests ran. Switched CI to the standard Google APIs 37.0 image
+  and explicit pre-launch ADB startup; the 16 KB image run is not a pass.
+- Runner-side guard fixture checks: trusted main/tag allowed; PR, foreign repository,
+  other branch and unknown workflow rejected. Installed outside the checkout through
+  the official pre-job hook. All external fork PR runs require owner approval.
+- Platform-specific local packaging PASS; APK signer certificate matches 0.4.2 for
+  all three APKs, strict Mac signature verification PASS, no local home paths in ZIP.

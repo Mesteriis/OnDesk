@@ -60,8 +60,9 @@ with JDK keytool; store them outside the checkout with restricted permissions.
    private files, logs, credentials and machine-local paths. Run the release script.
 2. Check bundle metadata, executable architecture, APK package/version/debuggable
    status, signatures, embedded notices and archive contents.
-3. Commit the reviewed source. Create a tag and GitHub release targeting its full
-   commit SHA; upload only the staged release assets, never `.work` or signing files.
+3. Commit the reviewed source to main, wait for Checks, then push a matching version
+   tag. The Release workflow publishes its checked artifacts; do not create a
+   competing manual release. Never upload `.work` or signing files.
 4. Download the published assets and compare checksums. Verify the source tag matches
    the tested commit. Mark hardware checks separately from local tests.
 
@@ -74,7 +75,7 @@ feature checks performed on physical devices and emulators before publication.
 - **Checks** runs on pushes to main, pull requests and manual dispatch. Android JVM
   tests, release lint and debug/test APK builds use GitHub-hosted Ubuntu. A reusable
   instrumentation workflow runs ShareCompletionTest, LinkShareTest and RemoteCloseTest
-  on fresh API 36/37 emulators (10 tests each). It does not run screenshot accessibility
+  on fresh API 36/37 Google APIs emulators (10 tests each). It does not run screenshot accessibility
   or cross-platform TLS fixtures; those need their separate setup in VALIDATION.md.
 - Swift tests and an optimized Mac bundle run on the `ondesk-macos` self-hosted runner
   only for main pushes/manual main runs. Pull requests never run on the personal Mac.
@@ -87,7 +88,12 @@ feature checks performed on physical devices and emulators before publication.
 - Manual **Release** from main builds/tests/uploads artifacts without publishing.
   Download the workflow artifacts from the run page to inspect a release candidate.
 - All external contributors require maintainer approval before fork PR workflows
-  run. Review workflow changes before approving; a PR can modify its workflow YAML,
+  run. A runner-side pre-job hook also rejects PR events, foreign repositories,
+  non-main/non-release refs and unknown workflows before any workflow step. Install
+  a copy of `scripts/ci/guard-macos-runner.sh` outside the runner directory/workspace
+  and configure `ACTIONS_RUNNER_HOOK_JOB_STARTED` in its private `.env`, then restart
+  the service. The configured copy stays outside checkout and cannot be changed by
+  a PR checkout. Review workflow changes before approving; a PR can modify its workflow YAML,
   so job-level conditions alone are not a sandbox for a public self-hosted runner.
 - Android signing uses repository secrets `ANDROID_RELEASE_KEYSTORE_BASE64` and
   `ANDROID_RELEASE_KEYSTORE_PASSWORD`, alias `ondesk`, with the same key as 0.4.2.
