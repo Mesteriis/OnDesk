@@ -305,3 +305,9 @@ Conscrypt отклонял его с INVALID_INTEGER. Регрессия на ф
 - Disposable ARM emulator script executed locally with explicit emulator targeting:
   Android 17 booted, all 10 instrumentation tests PASS (`OK (10 tests)`). APKs were
   installed only into that disposable AVD, which was terminated and removed afterward.
+- Final integrated Checks run [38360400325](https://github.com/Mesteriis/OnDesk/actions/runs/38360400325)
+  on commit 451d797508f67e5e7ed8ed2d69029634a922e974: all four jobs PASS.
+  Mac: 28 Swift tests + optimized bundle; hosted Android: 12 JVM tests, zero release
+  lint errors, debug/test APK builds; API 36 Linux: 10 instrumentation tests PASS;
+  API 37 Mac ARM: 10 instrumentation tests PASS, downloaded `OK (10 tests)` report.
+  No physical-device installation or test is claimed by this CI run.

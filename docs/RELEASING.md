@@ -104,7 +104,8 @@ feature checks performed on physical devices and emulators before publication.
   and removed on exit. Keep a private backup; GitHub Secrets cannot be read back.
 - The Mac runner is a separate user LaunchAgent named `ondesk-macos-arm64`; it does
   not replace other CI services. It needs the Mac awake and the user session logged
-  in. No release workflow accesses the personal pairing Keychain or installs apps.
+  in. No release workflow accesses the personal pairing Keychain or installs apps on
+  physical devices.
 
 To release, update all three platform versions/build numbers and CHANGELOG, push main,
 wait for Checks, then push the corresponding `vMAJOR.MINOR.PATCH` tag. Inspect the

@@ -4,6 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/Mesteriis/OnDesk)](https://github.com/Mesteriis/OnDesk/releases/latest)
+[![Checks](https://github.com/Mesteriis/OnDesk/actions/workflows/checks.yml/badge.svg?branch=main)](https://github.com/Mesteriis/OnDesk/actions/workflows/checks.yml)
 
 Открытая утилита для передачи файлов с Android на Mac в локальной сети.
 На Mac живёт в строке меню. На Android выбирается в меню **Поделиться**.
